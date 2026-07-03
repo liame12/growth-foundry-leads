@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Growth Foundry — Lancashire Roofer Leads</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a18; min-height: 100vh; }
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .sub { font-size: 14px; color: #666; margin-bottom: 1.75rem; }
+  .box { background: #fff; border: 1px solid #e5e5e0; border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem; }
+  .box h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .box p { font-size: 13px; color: #666; margin-bottom: 10px; }
+  .row { display: flex; gap: 8px; }
+  .row input { flex: 1; font-size: 13px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+  .row input:focus { border-color: #3B6D11; }
+  .status-msg { font-size: 12px; margin-top: 6px; }
+  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.25rem; }
+  .stat { background: #fff; border: 1px solid #e5e5e0; border-radius: 10px; padding: 12px 14px; }
+  .slabel { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .sval { font-size: 24px; font-weight: 600; }
+  .search-bar { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .search-bar input { flex: 1; min-width: 140px; font-size: 13px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+  .search-bar input:focus { border-color: #3B6D11; }
+  .search-bar select { font-size: 13px; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff; outline: none; width: 160px; }
+  .tabs { display: flex; border-bottom: 1px solid #e5e5e0; margin-bottom: 1.25rem; }
+  .tab { font-size: 14px; padding: 9px 18px; cursor: pointer; border-bottom: 2px solid transparent; color: #888; background: none; border-top: none; border-left: none; border-right: none; font-family: inherit; }
+  .tab.active { color: #1a1a18; border-bottom: 2px solid #1a1a18; font-weight: 500; }
+  .grid { display: flex; flex-direction: column; gap: 12px; }
+  .card { background: #fff; border: 1px solid #e5e5e0; border-radius: 12px; padding: 1rem 1.25rem; }
+  .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .card-name { font-size: 15px; font-weight: 600; }
+  .card-meta { font-size: 13px; color: #888; margin-top: 3px; }
+  .card-meta span { margin-right: 10px; }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .bg{background:#EAF3DE;color:#3B6D11}.ba{background:#FEF3C7;color:#92400E}.bgr{background:#F3F4F6;color:#6B7280}.bb{background:#DBEAFE;color:#1D4ED8}.bc{background:#FEE2E2;color:#991B1B}.bp{background:#EDE9FE;color:#6D28D9}.bs{background:#EAF3DE;color:#3B6D11}
+  .contacts { display: flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
+  .ci { font-size: 13px; color: #555; }
+  .ci a { color: #1D4ED8; text-decoration: none; }
+  .ci a:hover { text-decoration: underline; }
+  .snippet { font-size: 13px; color: #888; margin-top: 10px; border-top: 1px solid #f0f0ec; padding-top: 10px; font-style: italic; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+  button { font-family: inherit; cursor: pointer; }
+  .btn { font-size: 13px; padding: 6px 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #333; }
+  .btn:hover { background: #f5f5f3; }
+  .btn-send { font-size: 13px; padding: 8px 18px; background: #3B6D11; border: none; color: #fff; border-radius: 8px; cursor: pointer; font-weight: 600; }
+  .btn-send:hover { background: #2a4f0c; }
+  .btn-send:disabled { background: #999; cursor: not-allowed; }
+  .btn-primary { font-size: 13px; padding: 8px 16px; background: #1a1a18; border: none; color: #fff; border-radius: 8px; cursor: pointer; font-weight: 500; }
+  .btn-primary:hover { background: #333; }
+  .qs { font-size: 12px; padding: 5px 10px; border-radius: 8px; border: 1px solid #ddd; background: #fff; color: #555; font-family: inherit; }
+  .dbox { margin-top: 14px; border: 1px solid #e5e5e0; border-radius: 10px; overflow: hidden; }
+  .dhead { background: #f9f9f7; padding: 9px 12px; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; border-bottom: 1px solid #e5e5e0; }
+  .ttag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  .tn{background:#FEE2E2;color:#991B1B}.th{background:#DBEAFE;color:#1D4ED8}.tg{background:#EDE9FE;color:#6D28D9}
+  .dsubj { padding: 9px 12px; font-size: 13px; color: #666; border-bottom: 1px solid #e5e5e0; }
+  .dsubj strong { color: #1a1a18; }
+  .dbody { padding: 12px; font-size: 13px; line-height: 1.75; color: #1a1a18; white-space: pre-wrap; max-height: 260px; overflow-y: auto; background: #fff; }
+  .dfoot { padding: 10px 12px; border-top: 1px solid #e5e5e0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; background: #f9f9f7; }
+  .noemail { font-size: 12px; color: #991B1B; }
+  .senttime { font-size: 12px; color: #3B6D11; font-weight: 600; }
+  .spin { display: inline-block; width: 13px; height: 13px; border: 2px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius: 50%; animation: sp 0.7s linear infinite; vertical-align: -2px; margin-right: 4px; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  .empty { text-align: center; padding: 3.5rem 1rem; color: #999; font-size: 14px; }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #1a1a18; color: #fff; border-radius: 10px; padding: 11px 18px; font-size: 13px; z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+  .toast.show { opacity: 1; }
+  @media (max-width: 600px) {
+    .stats-row { grid-template-columns: repeat(2,1fr); }
+    .search-bar select { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🏠 Lancashire Roofer Leads</h1>
+  <p class="sub">Growth Foundry outreach — one click sends directly from your Gmail.</p>
+
+  <div class="box">
+    <h3>✉ Got a reply? Send your follow-up</h3>
+    <p>When a lead replies interested, paste their email and fire back instantly.</p>
+    <div class="row">
+      <input type="email" id="replyEmail" placeholder="Their email address..." />
+      <button class="btn-send" id="followUpBtn">Send "Mind if I send it across?"</button>
+    </div>
+    <div id="followStatus" class="status-msg"></div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="slabel">Total leads</div><div class="sval" id="sTotal">0</div></div>
+    <div class="stat"><div class="slabel">Emails found</div><div class="sval" id="sEmails">0</div></div>
+    <div class="stat"><div class="slabel">No website</div><div class="sval" id="sNoSite">0</div></div>
+    <div class="stat"><div class="slabel">Sent</div><div class="sval" id="sSent">0</div></div>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search name or town..." />
+    <select id="filterSel">
+      <option value="">All leads</option>
+      <option value="email">Has email</option>
+      <option value="nosite">No website</option>
+      <option value="hassite">Has website</option>
+      <option value="drafted">Drafted</option>
+      <option value="sent">Sent</option>
+    </select>
+    <button class="btn-primary" id="fetchBtn">↻ Fetch leads</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" id="tabLeads">Leads</button>
+    <button class="tab" id="tabDrafted">Drafted & Sent</button>
+  </div>
+
+  <div id="leadsTab">
+    <div class="grid" id="leadsGrid">
+      <div class="empty">Click <strong>Fetch leads</strong> to load Lancashire roofers.</div>
+    </div>
+  </div>
+  <div id="draftedTab" style="display:none;">
+    <div class="grid" id="draftedGrid">
+      <div class="empty">No emails drafted yet.</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var EMAILJS_PK  = "4Cpw4J293wy7-btox";
+var EMAILJS_SID = "service_7cldfw5";
+var EMAILJS_TID = "template_32xa9ct";
+var SNAME    = "Liam";
+var SCOMPANY = "Growth Foundry";
+var SPHONE   = "07376 641354";
+
+var RAW = [
+  {id:1,name:"Pinnacle Roofing Solutions",town:"Preston",owner:"Dave Marsden",rating:4.8,reviews:34,phone:"01772 445821",email:"info@pinnacleroofingpr.co.uk",website:"www.pinnacleroofingpr.co.uk",sq:"weak",snippet:"Dave and his team were fantastic — sorted our ridge tiles same week."},
+  {id:2,name:"Lancashire Slate & Tile",town:"Blackburn",owner:"Mike Hargreaves",rating:4.6,reviews:28,phone:"01254 778032",email:"",website:"www.lancashireslatile.co.uk",sq:"weak",snippet:"Mike came out next day for a quote, very professional job."},
+  {id:3,name:"Northern Heights Roofing",town:"Lancaster",owner:"",rating:4.5,reviews:19,phone:"01524 331092",email:"contact@northernheightsroofing.co.uk",website:"www.northernheightsroofing.co.uk",sq:"good",snippet:"Quality work at a fair price, would highly recommend."},
+  {id:4,name:"Ribble Valley Roofing",town:"Clitheroe",owner:"James Sutcliffe",rating:4.9,reviews:52,phone:"01200 428831",email:"james@ribblevalleyroofing.co.uk",website:"www.ribblevalleyroofing.co.uk",sq:"good",snippet:"James is the best roofer in the valley, honest and reliable."},
+  {id:5,name:"Fylde Coast Roofing",town:"Blackpool",owner:"",rating:4.3,reviews:14,phone:"01253 662901",email:"",website:"",sq:"none",snippet:"Did a solid job on our flat roof extension."},
+  {id:6,name:"TRS Roofing Services",town:"Burnley",owner:"Tony Rawlinson",rating:4.7,reviews:41,phone:"01282 556771",email:"tony@trsroofing.co.uk",website:"www.trsroofing.co.uk",sq:"weak",snippet:"Tony runs a tight ship — spotless finish and no mess left behind."},
+  {id:7,name:"Pendle Roofing Co.",town:"Nelson",owner:"",rating:4.4,reviews:22,phone:"01282 861103",email:"hello@pendleroofing.co.uk",website:"www.pendleroofing.co.uk",sq:"weak",snippet:"Used them twice now, always good value."},
+  {id:8,name:"Ormskirk & West Lancs Roofing",town:"Ormskirk",owner:"Gary Prescott",rating:4.5,reviews:17,phone:"01695 574402",email:"",website:"www.owlroofing.co.uk",sq:"weak",snippet:"Gary quoted us fairly and got the job done ahead of schedule."},
+  {id:9,name:"Chorley Roofing Specialists",town:"Chorley",owner:"Ian Booth",rating:4.8,reviews:39,phone:"01257 265143",email:"ian@chorleyroofing.co.uk",website:"www.chorleyroofing.co.uk",sq:"good",snippet:"Ian's been roofing in Chorley for over 20 years — total professional."},
+  {id:10,name:"Wyre Roofing & Guttering",town:"Fleetwood",owner:"",rating:4.2,reviews:11,phone:"01253 875510",email:"info@wyreroofing.co.uk",website:"www.wyreroofing.co.uk",sq:"weak",snippet:"Came out quickly after storm damage, sorted in a day."},
+  {id:11,name:"Accrington Flat Roofing",town:"Accrington",owner:"Paul Duckworth",rating:4.6,reviews:26,phone:"01254 231708",email:"paul@accringtonroofing.co.uk",website:"",sq:"none",snippet:"Paul talked us through every option before starting — very thorough."},
+  {id:12,name:"Leyland Roofing & Repairs",town:"Leyland",owner:"",rating:4.3,reviews:15,phone:"01772 458802",email:"contact@leylandroofing.co.uk",website:"www.leylandroofing.co.uk",sq:"weak",snippet:"Reasonable price and the work looks great."}
+];
+
+var leads = [], filtered = [], drafts = {}, sent = {};
+
+emailjs.init(EMAILJS_PK);
+
+function showToast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(function(){ el.classList.remove('show'); }, 3000);
+}
+
+function updateStats() {
+  document.getElementById('sTotal').textContent = leads.length;
+  document.getElementById('sEmails').textContent = leads.filter(function(l){return l.email;}).length;
+  document.getElementById('sNoSite').textContent = leads.filter(function(l){return !l.website;}).length;
+  document.getElementById('sSent').textContent = Object.keys(sent).length;
+}
+
+function fetchLeads() {
+  leads = JSON.parse(JSON.stringify(RAW));
+  filtered = leads.slice();
+  render(filtered);
+  updateStats();
+  showToast('Loaded ' + leads.length + ' roofers in Lancashire');
+}
+
+function doFilter() {
+  var q = document.getElementById('searchInput').value.toLowerCase();
+  var s = document.getElementById('filterSel').value;
+  filtered = leads.filter(function(l) {
+    var mq = !q||l.name.toLowerCase().indexOf(q)>-1||l.town.toLowerCase().indexOf(q)>-1||(l.owner&&l.owner.toLowerCase().indexOf(q)>-1);
+    var ms = !s||(s==='email'&&l.email)||(s==='nosite'&&!l.website)||(s==='hassite'&&l.website)||(s==='drafted'&&drafts[l.id])||(s==='sent'&&sent[l.id]);
+    return mq&&ms;
+  });
+  render(filtered);
+}
+
+function firstName(l){ return l.owner?l.owner.split(' ')[0]:''; }
+function signOff(){ return "\n\nMind if I send it across?\n\n"+SNAME+"\n"+SCOMPANY+"\n"+SPHONE+"\n\nTo opt out of future emails, simply reply with 'unsubscribe'."; }
+
+function genNoSite(l){
+  var n=firstName(l)||'there';
+  return {
+    subject:"Quick idea for "+l.name+" — more "+l.town+" roofing jobs online",
+    body:"Hi "+n+",\n\nI came across "+l.name+" on Google Maps and noticed you're doing great work in "+l.town+" — "+l.reviews+" reviews and a "+l.rating+"-star rating speaks for itself.\n\nOne thing I noticed: you don't currently have a website. That means people searching \"roofer in "+l.town+"\" right now are landing on a competitor instead of you — even though you're clearly better reviewed.\n\nWe build fast, professional websites for roofers designed to rank on Google and turn visitors into enquiries — a clean homepage, your reviews and photos front and centre, a contact form, and a click-to-call button.\n\nAs an additional option, we can also set up a fully automated assistant on the site that answers customer questions and books in enquiries 24/7, even when you're up on a roof.\n\nI'd love to put together a free mockup for you, no obligation at all."+signOff(),
+    type:'nosite'
+  };
+}
+function genWeak(l){
+  var n=firstName(l)||'there';
+  return {
+    subject:l.name+" — a quick idea for your website",
+    body:"Hi "+n+",\n\nI spotted "+l.name+" on Google Maps — "+l.reviews+" reviews and "+l.rating+" stars, clearly doing solid work in "+l.town+".\n\nI had a look at "+l.website+" and think there's real room to get more enquiries out of it — faster load speed, your reviews and photos front and centre, and a clearer call-to-action are usually the difference between a visitor leaving and a visitor calling.\n\nWe build modern websites for roofers designed to convert visitors into booked jobs, with local SEO so you show up first for \""+l.town+" roofer\" searches.\n\nAs an additional option, we can add a fully automated assistant that answers customer questions and captures enquiry details 24/7, so you never miss a job while out on site.\n\nI'd be happy to put together a free mockup, no obligation."+signOff(),
+    type:'hassite'
+  };
+}
+function genGood(l){
+  var n=firstName(l)||'there';
+  return {
+    subject:l.name+" — never miss an enquiry, even off the tools",
+    body:"Hi "+n+",\n\nI came across "+l.name+" on Google Maps — "+l.reviews+" reviews and "+l.rating+" stars in "+l.town+", and your website at "+l.website+" is already in good shape. Clean, professional, does its job.\n\nThe one gap I usually see even on good sites like yours is what happens when someone visits outside working hours, or while you're up a ladder. Most of those enquiries just go to a competitor.\n\nWe build a fully automated assistant that sits on your website, answers customer questions, gives quotes for common jobs, and captures contact details instantly — any time of day.\n\nI'd be happy to show you a quick example of how it would work on your site, no obligation at all."+signOff(),
+    type:'goodsite'
+  };
+}
+function genTemplate(l){ if(!l.website)return genNoSite(l); if(l.sq==='good')return genGood(l); return genWeak(l); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function tc(t){ return t==='nosite'?'tn':t==='goodsite'?'tg':'th'; }
+function tl(t){ return t==='nosite'?'No website':t==='goodsite'?'Great site':'Weak site'; }
+
+function sendEmail(to, subject, body, onOk, onErr) {
+  emailjs.send(EMAILJS_SID, EMAILJS_TID, { to:to, subject:subject, body:body })
+    .then(function(){ onOk(); })
+    .catch(function(e){ onErr(e.text||JSON.stringify(e)); });
+}
+
+function draftBoxHtml(l, d) {
+  var isSent = !!sent[l.id];
+  return '<div class="dbox">'
+    +'<div class="dhead"><span>Ready to send</span><span class="ttag '+tc(d.type)+'">'+tl(d.type)+'</span></div>'
+    +'<div class="dsubj">Subject: <strong>'+esc(d.subject)+'</strong></div>'
+    +'<div class="dbody">'+esc(d.body)+'</div>'
+    +'<div class="dfoot">'
+    +(!l.email
+      ? '<span class="noemail">⚠ No email found — find it manually</span>'
+      : isSent
+        ? '<span class="senttime">✓ Sent at '+sent[l.id]+'</span>'
+        : '<button class="btn-send sbtn" data-id="'+l.id+'">✉ Send now</button>'
+    )
+    +' <button class="btn cpbtn" data-id="'+l.id+'">Copy</button>'
+    +'</div></div>';
+}
+
+function render(list) {
+  var g = document.getElementById('leadsGrid');
+  if (!list.length) { g.innerHTML = '<div class="empty">No leads match your filter.</div>'; return; }
+  var html = '';
+  for (var i = 0; i < list.length; i++) {
+    var l = list[i];
+    var d = drafts[l.id];
+    var isSent = !!sent[l.id];
+    html += '<div class="card">'
+      +'<div class="card-head">'
+        +'<div><div class="card-name">'+l.name+'</div><div class="card-meta"><span>📍 '+l.town+'</span><span>★ '+l.rating+' ('+l.reviews+')</span></div></div>'
+        +'<div class="badges">'
+          +(l.email?'<span class="badge bg">Email</span>':'<span class="badge bgr">No email</span>')
+          +(!l.website?'<span class="badge bc">No site</span>':l.sq==='good'?'<span class="badge bp">Good site</span>':'<span class="badge bb">Weak site</span>')
+          +(isSent?'<span class="badge bs">✓ Sent</span>':d?'<span class="badge ba">Ready</span>':'')
+        +'</div>'
+      +'</div>'
+      +'<div class="contacts">'
+        +(l.owner?'<span class="ci">👤 '+l.owner+'</span>':'')
+        +'<span class="ci">📞 '+l.phone+'</span>'
+        +(l.email?'<span class="ci"><a href="mailto:'+l.email+'">'+l.email+'</a></span>':'')
+        +(l.website?'<span class="ci">🌐 <a href="https://'+l.website+'" target="_blank">'+l.website+'</a></span>':'')
+      +'</div>'
+      +(l.snippet?'<div class="snippet">"'+l.snippet+'"</div>':'')
+      +'<div class="actions">'
+        +'<button class="btn pbtn" data-id="'+l.id+'">'+(d?'↻ Regenerate':'✉ Prepare email')+'</button>'
+        +(l.website?'<select class="qs qsel" data-id="'+l.id+'"><option value="weak"'+(l.sq==='weak'?' selected':'')+'>Weak site</option><option value="good"'+(l.sq==='good'?' selected':'')+'>Great site</option></select>':'')
+      +'</div>'
+      +(d?draftBoxHtml(l,d):'')
+      +'</div>';
+  }
+  g.innerHTML = html;
+  g.querySelectorAll('.pbtn').forEach(function(b){ b.addEventListener('click',function(){prepare(+this.dataset.id);}); });
+  g.querySelectorAll('.qsel').forEach(function(s){ s.addEventListener('change',function(){setQuality(+this.dataset.id,this.value);}); });
+  g.querySelectorAll('.sbtn').forEach(function(b){ b.addEventListener('click',function(){doSend(+this.dataset.id,this);}); });
+  g.querySelectorAll('.cpbtn').forEach(function(b){ b.addEventListener('click',function(){copyDraft(+this.dataset.id);}); });
+}
+
+function prepare(id) {
+  var l = leads.find(function(x){return x.id===id;});
+  if (!l) return;
+  drafts[id] = genTemplate(l);
+  updateStats(); render(filtered); renderDrafted();
+  showToast('Email ready — click Send now');
+}
+
+function setQuality(id, val) {
+  var l = leads.find(function(x){return x.id===id;});
+  if (l) { l.sq=val; delete drafts[id]; }
+  render(filtered);
+  showToast('Updated — click Prepare email to regenerate');
+}
+
+function copyDraft(id) {
+  var d = drafts[id];
+  if (!d) return;
+  navigator.clipboard.writeText('Subject: '+d.subject+'\n\n'+d.body).then(function(){showToast('Copied!');});
+}
+
+function doSend(id, btn) {
+  var l = leads.find(function(x){return x.id===id;});
+  var d = drafts[id];
+  if (!l||!d||!l.email) return;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Sending...';
+  sendEmail(l.email, d.subject, d.body,
+    function() {
+      var t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      sent[id] = t;
+      updateStats(); render(filtered); renderDrafted();
+      showToast('✓ Sent to '+l.name+'!');
+    },
+    function(err) {
+      btn.disabled = false;
+      btn.innerHTML = '✉ Send now';
+      showToast('Error: '+err);
+    }
+  );
+}
+
+function renderDrafted() {
+  var g = document.getElementById('draftedGrid');
+  var ids = Object.keys(drafts);
+  if (!ids.length) { g.innerHTML = '<div class="empty">No emails drafted yet.</div>'; return; }
+  var html = '';
+  for (var i = 0; i < ids.length; i++) {
+    var id = ids[i];
+    var l = leads.find(function(x){return x.id==id;});
+    var d = drafts[id];
+    var isSent = !!sent[id];
+    html += '<div class="card">'
+      +'<div class="card-head">'
+        +'<div><div class="card-name">'+l.name+'</div><div class="card-meta"><span>'+l.town+'</span>'+(l.email?'<span>'+l.email+'</span>':'<span style="color:#991B1B">No email</span>')+'</div></div>'
+        +'<div style="display:flex;gap:6px;align-items:center;">'
+          +(isSent?'<span class="badge bs">✓ Sent '+sent[id]+'</span>':'<span class="badge ba">Drafted</span>')
+          +'<span class="ttag '+tc(d.type)+'" style="padding:3px 8px;">'+tl(d.type)+'</span>'
+        +'</div>'
+      +'</div>'
+      +'<div style="font-size:13px;color:#888;margin:8px 0;">Subject: <strong style="color:#1a1a18;">'+esc(d.subject)+'</strong></div>'
+      +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+        +(!l.email?'<span class="noemail">No email — find it manually</span>'
+          :isSent?'<span class="senttime">✓ Sent at '+sent[id]+'</span>'
+          :'<button class="btn-send sbtn2" data-id="'+id+'">✉ Send now</button>')
+        +' <button class="btn cpbtn2" data-id="'+id+'">Copy</button>'
+      +'</div>'
+      +'</div>';
+  }
+  g.innerHTML = html;
+  g.querySelectorAll('.sbtn2').forEach(function(b){ b.addEventListener('click',function(){doSend(+this.dataset.id,this);}); });
+  g.querySelectorAll('.cpbtn2').forEach(function(b){ b.addEventListener('click',function(){copyDraft(+this.dataset.id);}); });
+}
+
+function sendFollowUp() {
+  var email = document.getElementById('replyEmail').value.trim();
+  if (!email) { showToast('Enter their email first'); return; }
+  var btn = document.getElementById('followUpBtn');
+  var status = document.getElementById('followStatus');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Sending...';
+  sendEmail(email, 'Re: following up', 'Mind if I send it across?\n\n'+SNAME+'\n'+SCOMPANY+'\n'+SPHONE,
+    function() {
+      btn.disabled = false;
+      btn.innerHTML = 'Send "Mind if I send it across?"';
+      status.textContent = '✓ Follow-up sent!';
+      status.style.color = '#3B6D11';
+      showToast('✓ Follow-up sent!');
+    },
+    function(err) {
+      btn.disabled = false;
+      btn.innerHTML = 'Send "Mind if I send it across?"';
+      status.textContent = 'Error: '+err;
+      status.style.color = '#991B1B';
+    }
+  );
+}
+
+document.getElementById('fetchBtn').addEventListener('click', fetchLeads);
+document.getElementById('searchInput').addEventListener('input', doFilter);
+document.getElementById('filterSel').addEventListener('change', doFilter);
+document.getElementById('followUpBtn').addEventListener('click', sendFollowUp);
+document.getElementById('tabLeads').addEventListener('click', function() {
+  document.getElementById('tabLeads').classList.add('active');
+  document.getElementById('tabDrafted').classList.remove('active');
+  document.getElementById('leadsTab').style.display='block';
+  document.getElementById('draftedTab').style.display='none';
+});
+document.getElementById('tabDrafted').addEventListener('click', function() {
+  document.getElementById('tabDrafted').classList.add('active');
+  document.getElementById('tabLeads').classList.remove('active');
+  document.getElementById('leadsTab').style.display='none';
+  document.getElementById('draftedTab').style.display='block';
+  renderDrafted();
+});
+
+fetchLeads();
+</script>
+</body>
+</html>
